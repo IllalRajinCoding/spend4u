@@ -54,10 +54,10 @@ export function FeaturesGridSection() {
       className="mx-auto mt-24 w-full max-w-7xl scroll-mt-32"
     >
       <div className="mx-auto max-w-3xl text-center">
-        <h2 className="text-3xl font-semibold tracking-tight text-[#101427] sm:text-4xl">
+        <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
           Everything your team needs to operate from signal, not noise
         </h2>
-        <p className="mt-4 text-base leading-7 text-[#4f5a78]">
+        <p className="mt-4 text-base leading-7 text-slate-600">
           Six focused capabilities designed to improve visibility, speed up
           execution, and strengthen strategic decisions.
         </p>
@@ -67,14 +67,14 @@ export function FeaturesGridSection() {
         {features.map((feature) => (
           <Card
             key={feature.title}
-            className="group transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(15,22,40,0.1)]"
+            className="group transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(15,23,42,0.1)]"
           >
             <CardContent className="pt-6">
-              <feature.icon className="size-5 text-[#2f5bff]" />
-              <h3 className="mt-5 text-lg font-semibold text-[#12182b]">
+              <feature.icon className="size-5 text-slate-700" />
+              <h3 className="mt-5 text-lg font-semibold text-slate-900">
                 {feature.title}
               </h3>
-              <p className="mt-2 text-sm leading-6 text-[#525e7d]">
+              <p className="mt-2 text-sm leading-6 text-slate-600">
                 {feature.description}
               </p>
             </CardContent>

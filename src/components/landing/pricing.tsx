@@ -44,10 +44,10 @@ export function PricingSection() {
       className="mx-auto mt-24 w-full max-w-7xl scroll-mt-32"
     >
       <div className="mx-auto max-w-3xl text-center">
-        <h3 className="text-3xl font-semibold tracking-tight text-[#101628] sm:text-4xl">
+        <h3 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
           Simple pricing that scales with your team
         </h3>
-        <p className="mt-4 text-base leading-7 text-[#4e5978]">
+        <p className="mt-4 text-base leading-7 text-slate-600">
           Start quickly, then expand into advanced governance and strategic
           workflows.
         </p>
@@ -59,7 +59,7 @@ export function PricingSection() {
             key={tier.name}
             className={
               tier.popular
-                ? "relative border-[#b9c9ff] shadow-[0_16px_40px_rgba(47,91,255,0.2)]"
+                ? "relative border-slate-300 shadow-[0_16px_36px_rgba(15,23,42,0.12)]"
                 : ""
             }
           >
@@ -67,23 +67,23 @@ export function PricingSection() {
               {tier.popular ? (
                 <Badge className="mb-4">Most Popular</Badge>
               ) : null}
-              <p className="text-sm font-semibold text-[#253150]">
+              <p className="text-sm font-semibold text-slate-700">
                 {tier.name}
               </p>
-              <p className="mt-2 text-3xl font-semibold tracking-tight text-[#11172a]">
+              <p className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
                 {tier.price}
                 {tier.price !== "Custom" ? (
-                  <span className="text-sm text-[#617096]">/mo</span>
+                  <span className="text-sm text-slate-500">/mo</span>
                 ) : null}
               </p>
-              <p className="mt-3 text-sm leading-6 text-[#4f5b7a]">
+              <p className="mt-3 text-sm leading-6 text-slate-600">
                 {tier.description}
               </p>
 
-              <ul className="mt-5 space-y-2 text-sm text-[#405072]">
+              <ul className="mt-5 space-y-2 text-sm text-slate-700">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-2">
-                    <Check className="size-4 text-[#2f5bff]" />
+                    <Check className="size-4 text-slate-700" />
                     <span>{feature}</span>
                   </li>
                 ))}

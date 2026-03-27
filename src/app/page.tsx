@@ -11,17 +11,19 @@ import { TestimonialsSection } from "@/components/landing/testimonials";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#f4f7fd] px-4 pb-6 sm:px-6 lg:px-8">
+    <>
       <LandingNavbar />
-      <LandingHero />
-      <SocialProofSection />
-      <FeaturesGridSection />
-      <HighlightSections />
-      <MetricsSection />
-      <TestimonialsSection />
-      <PricingSection />
-      <FinalCtaSection />
-      <LandingFooter />
-    </main>
+      <main className="relative min-h-screen overflow-x-hidden bg-slate-50 px-4 pb-6 sm:px-6 lg:px-8">
+        <LandingHero />
+        <SocialProofSection />
+        <FeaturesGridSection />
+        <HighlightSections />
+        <MetricsSection />
+        <TestimonialsSection />
+        <PricingSection />
+        <FinalCtaSection />
+        <LandingFooter />
+      </main>
+    </>
   );
 }

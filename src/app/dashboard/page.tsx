@@ -1,10 +1,13 @@
-import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
+import { UserButton } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs/server";
+
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { DashboardSidebar } from "@/components/dashboard/sidebar";
 import { StatCard } from "@/components/dashboard/stat-card";
 
+// --- 1. DATA DUMMY ---
 const stats = [
   { label: "Active Users", value: "12,480", change: "+8.2% vs last week" },
   { label: "Revenue", value: "$98,420", change: "+4.9% this month" },
@@ -22,7 +25,95 @@ const chartBars = [
   { id: "w8", value: 62 },
 ];
 
+// --- 2. KOMPONEN LOADING (SKELETON UI) ---
+// Ini akan tampil selama data user sedang di-fetch dari Clerk
+function DashboardSkeleton() {
+  return (
+    <section className="space-y-6 animate-pulse">
+      {/* Skeleton Header */}
+      <div className="h-24 w-full rounded-2xl bg-[#f0f3f9]" />
+
+      {/* Skeleton Stats */}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="h-32 rounded-2xl bg-[#f0f3f9]" />
+        <div className="h-32 rounded-2xl bg-[#f0f3f9]" />
+        <div className="h-32 rounded-2xl bg-[#f0f3f9]" />
+      </div>
+
+      {/* Skeleton Chart & Activity */}
+      <div className="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
+        <div className="h-80 rounded-2xl bg-[#f0f3f9]" />
+        <div className="h-80 rounded-2xl bg-[#f0f3f9]" />
+      </div>
+    </section>
+  );
+}
+
+// --- 3. KOMPONEN KONTEN UTAMA (ASYNC FETCH) ---
+// Komponen ini bertugas mengambil data user yang memakan waktu
+async function DashboardContent() {
+  const user = await currentUser();
+
+  // Logika penentuan nama yang aman
+  const name =
+    user?.firstName || user?.emailAddresses?.[0]?.emailAddress || "User";
+
+  return (
+    <section className="space-y-6">
+      <header className="flex items-center justify-between rounded-2xl border border-[#e6e9f1] bg-white p-4 shadow-[0_8px_22px_rgba(16,20,34,0.06)] sm:p-6">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6f7794]">
+            Dashboard
+          </p>
+          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-[#111526]">
+            Good afternoon, welcome back {name}
+          </h1>
+        </div>
+        <UserButton />
+      </header>
+
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {stats.map((stat) => (
+          <StatCard
+            key={stat.label}
+            label={stat.label}
+            value={stat.value}
+            change={stat.change}
+          />
+        ))}
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
+        <RecentActivity />
+
+        <section className="rounded-2xl border border-[#e6e9f1] bg-white p-6 shadow-[0_8px_24px_rgba(16,22,38,0.06)]">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-[#121728]">
+              Performance trend
+            </h3>
+            <span className="text-xs text-[#6e7792]">Last 30 days</span>
+          </div>
+
+          <div className="mt-6 h-64 rounded-xl border border-dashed border-[#d9dfee] bg-[linear-gradient(180deg,#f9fbff_0%,#f2f6ff_100%)] p-4">
+            <div className="flex h-full items-end gap-2">
+              {chartBars.map((bar) => (
+                <div
+                  key={bar.id}
+                  className="flex-1 rounded-t-md bg-[linear-gradient(180deg,#6d88ff_0%,#355ffb_100%)]"
+                  style={{ height: `${bar.value}%` }}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  );
+}
+
+// --- 4. HALAMAN UTAMA (ENTRY POINT) ---
 export default async function DashboardPage() {
+  // Cek autentikasi dasar secepat mungkin
   const { userId } = await auth();
 
   if (!userId) {
@@ -32,57 +123,13 @@ export default async function DashboardPage() {
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
+        {/* Sidebar akan langsung dirender tanpa menunggu */}
         <DashboardSidebar active="overview" />
 
-        <section className="space-y-6">
-          <header className="flex items-center justify-between rounded-2xl border border-[#e6e9f1] bg-white p-4 shadow-[0_8px_22px_rgba(16,20,34,0.06)] sm:p-6">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6f7794]">
-                Dashboard
-              </p>
-              <h1 className="mt-1 text-2xl font-semibold tracking-tight text-[#111526]">
-                Good afternoon, welcome back
-              </h1>
-            </div>
-            <UserButton />
-          </header>
-
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {stats.map((stat) => (
-              <StatCard
-                key={stat.label}
-                label={stat.label}
-                value={stat.value}
-                change={stat.change}
-              />
-            ))}
-          </div>
-
-          <div className="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
-            <RecentActivity />
-
-            <section className="rounded-2xl border border-[#e6e9f1] bg-white p-6 shadow-[0_8px_24px_rgba(16,22,38,0.06)]">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-[#121728]">
-                  Performance trend
-                </h3>
-                <span className="text-xs text-[#6e7792]">Last 30 days</span>
-              </div>
-
-              <div className="mt-6 h-64 rounded-xl border border-dashed border-[#d9dfee] bg-[linear-gradient(180deg,#f9fbff_0%,#f2f6ff_100%)] p-4">
-                <div className="flex h-full items-end gap-2">
-                  {chartBars.map((bar) => (
-                    <div
-                      key={bar.id}
-                      className="flex-1 rounded-t-md bg-[linear-gradient(180deg,#6d88ff_0%,#355ffb_100%)]"
-                      style={{ height: `${bar.value}%` }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </section>
-          </div>
-        </section>
+        {/* Suspense akan menampilkan DashboardSkeleton sambil menunggu DashboardContent selesai diproses */}
+        <Suspense fallback={<DashboardSkeleton />}>
+          <DashboardContent />
+        </Suspense>
       </div>
     </main>
   );

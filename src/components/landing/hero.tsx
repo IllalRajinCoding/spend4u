@@ -4,6 +4,7 @@ import { ArrowRight, BarChart3, ShieldCheck, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Suspense } from "react";
 
 export function LandingHero() {
   return (
@@ -25,19 +26,25 @@ export function LandingHero() {
           </p>
 
           <div className="flex flex-wrap items-center gap-3">
-            <Show when="signed-out">
-              <SignUpButton mode="modal">
-                <Button size="lg">
-                  Get Started <ArrowRight className="ml-2 size-4" />
-                </Button>
-              </SignUpButton>
-            </Show>
+            <Suspense
+              fallback={
+                <div className="h-12 w-32 animate-pulse rounded-md bg-[#e3e8f4]" />
+              }
+            >
+              <Show when="signed-out">
+                <SignUpButton mode="modal">
+                  <Button size="lg">
+                    Get Started <ArrowRight className="ml-2 size-4" />
+                  </Button>
+                </SignUpButton>
+              </Show>
 
-            <Show when="signed-in">
-              <ButtonLink href="/dashboard" size="lg">
-                Open dashboard <ArrowRight className="ml-2 size-4" />
-              </ButtonLink>
-            </Show>
+              <Show when="signed-in">
+                <ButtonLink href="/dashboard" size="lg">
+                  Open dashboard <ArrowRight className="ml-2 size-4" />
+                </ButtonLink>
+              </Show>
+            </Suspense>
 
             <ButtonLink href="/dashboard" variant="secondary" size="lg">
               Live Demo
