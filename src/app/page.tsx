@@ -1,3 +1,4 @@
+// src/app/page.tsx
 import { FeaturesGridSection } from "@/components/landing/features-grid";
 import { FinalCtaSection } from "@/components/landing/final-cta";
 import { LandingFooter } from "@/components/landing/footer";
@@ -11,17 +12,19 @@ import { TestimonialsSection } from "@/components/landing/testimonials";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#f4f7fd] px-4 pb-6 sm:px-6 lg:px-8">
+    <>
       <LandingNavbar />
-      <LandingHero />
-      <SocialProofSection />
-      <FeaturesGridSection />
-      <HighlightSections />
-      <MetricsSection />
-      <TestimonialsSection />
-      <PricingSection />
-      <FinalCtaSection />
-      <LandingFooter />
-    </main>
+      <main className="bg-background relative min-h-screen overflow-x-hidden px-4 pb-6 sm:px-6 lg:px-8">
+        <LandingHero />
+        <SocialProofSection />
+        <FeaturesGridSection />
+        <HighlightSections />
+        <MetricsSection />
+        <TestimonialsSection />
+        <PricingSection />
+        <FinalCtaSection />
+        <LandingFooter />
+      </main>
+    </>
   );
 }

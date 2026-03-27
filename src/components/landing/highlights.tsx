@@ -39,18 +39,18 @@ export function HighlightSections() {
       {blocks.map((block, index) => (
         <div
           key={block.title}
-          className="grid items-center gap-7 rounded-3xl border border-[#e4e9f4] bg-white p-6 shadow-[0_14px_34px_rgba(15,22,40,0.07)] sm:p-8 lg:grid-cols-2"
+          className="border-border bg-card grid items-center gap-7 rounded-3xl border p-6 shadow-md sm:p-8 lg:grid-cols-2"
         >
           <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-            <h3 className="text-2xl font-semibold tracking-tight text-[#11172a] sm:text-3xl">
+            <h3 className="text-foreground text-2xl font-semibold tracking-tight sm:text-3xl">
               {block.title}
             </h3>
-            <p className="mt-4 text-base leading-7 text-[#505a78]">
+            <p className="text-muted-foreground mt-4 text-base leading-7">
               {block.description}
             </p>
-            <ul className="mt-5 space-y-2 text-sm text-[#465272]">
+            <ul className="text-foreground mt-5 space-y-2 text-sm">
               {block.points.map((point) => (
-                <li key={point} className="rounded-lg bg-[#f7f9ff] px-3 py-2">
+                <li key={point} className="bg-muted rounded-lg px-3 py-2">
                   {point}
                 </li>
               ))}
@@ -59,25 +59,33 @@ export function HighlightSections() {
 
           <Card className={index % 2 === 1 ? "lg:order-1" : ""}>
             <CardContent className="pt-6">
-              <div className="rounded-xl border border-[#e7ebf6] bg-[linear-gradient(180deg,#f8faff_0%,#f2f6ff_100%)] p-5">
+              <div className="border-border bg-muted rounded-xl border p-5">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-lg border border-[#e6e9f4] bg-white p-3">
-                    <p className="text-xs text-[#677193]">Growth signal</p>
-                    <p className="mt-1 text-lg font-semibold text-[#141a2e]">
+                  <div className="border-border bg-card rounded-lg border p-3">
+                    <p className="text-muted-foreground text-xs">
+                      Growth signal
+                    </p>
+                    <p className="text-foreground mt-1 text-lg font-semibold">
                       +18.4%
                     </p>
                   </div>
-                  <div className="rounded-lg border border-[#e6e9f4] bg-white p-3">
-                    <p className="text-xs text-[#677193]">At-risk segment</p>
-                    <p className="mt-1 text-lg font-semibold text-[#141a2e]">
+                  <div className="border-border bg-card rounded-lg border p-3">
+                    <p className="text-muted-foreground text-xs">
+                      At-risk segment
+                    </p>
+                    <p className="text-foreground mt-1 text-lg font-semibold">
                       2 cohorts
                     </p>
                   </div>
                 </div>
-                <div className="mt-4 h-36 rounded-lg border border-dashed border-[#ccd7f4] bg-white/80" />
-                <div className="mt-4 flex items-center justify-between rounded-lg border border-[#e6e9f4] bg-white px-3 py-2 text-sm">
-                  <span className="text-[#556181]">Action plan health</span>
-                  <span className="font-semibold text-[#2f5bff]">On track</span>
+                <div className="border-border bg-card/80 mt-4 h-36 rounded-lg border border-dashed" />
+                <div className="border-border bg-card mt-4 flex items-center justify-between rounded-lg border px-3 py-2 text-sm">
+                  <span className="text-muted-foreground">
+                    Action plan health
+                  </span>
+                  <span className="text-foreground font-semibold">
+                    On track
+                  </span>
                 </div>
               </div>
             </CardContent>
