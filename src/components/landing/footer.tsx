@@ -22,14 +22,14 @@ export function LandingFooter() {
   return (
     <footer
       id="docs"
-      className="mx-auto mt-16 w-full max-w-7xl border-t border-slate-200 pt-10 pb-12"
+      className="border-border bg-muted/30 mx-auto mt-16 w-full max-w-7xl border-t pt-10 pb-12"
     >
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="text-sm font-semibold tracking-[0.16em] text-slate-900">
+          <p className="text-foreground text-sm font-semibold tracking-[0.16em]">
             SPEND4U
           </p>
-          <p className="mt-3 max-w-sm text-sm leading-6 text-slate-600">
+          <p className="text-muted-foreground mt-3 max-w-sm text-sm leading-6">
             Premium command center for product, finance, and strategy operators.
           </p>
         </div>
@@ -50,13 +50,13 @@ type FooterColumnProps = {
 function FooterColumn({ title, links }: Readonly<FooterColumnProps>) {
   return (
     <div>
-      <p className="text-sm font-semibold text-slate-800">{title}</p>
+      <p className="text-foreground text-sm font-semibold">{title}</p>
       <ul className="mt-3 space-y-2">
         {links.map((link) => (
           <li key={link.label}>
             <Link
               href={link.href}
-              className="text-sm text-slate-600 transition-colors hover:text-slate-900"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
               {link.label}
             </Link>

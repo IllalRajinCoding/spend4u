@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Show, SignInButton, SignUpButton } from "@clerk/nextjs";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
 
 const links = [
   { href: "#features", label: "Features" },
@@ -36,23 +37,23 @@ export function LandingNavbar() {
       <nav
         className={`relative mx-auto flex h-16 w-full max-w-7xl items-center justify-between rounded-2xl border px-4 transition-all duration-300 sm:px-5 ${
           scrolled
-            ? "border-slate-300 bg-white/75 shadow-sm backdrop-blur-md"
-            : "border-transparent bg-slate-50/70 shadow-[0_4px_14px_rgba(15,23,42,0.04)] backdrop-blur-sm"
+            ? "border-border bg-background/80 shadow-sm backdrop-blur-md"
+            : "border-transparent bg-background/70 backdrop-blur-sm"
         }`}
       >
         <Link href="/" className="group flex items-center gap-2.5 select-none">
-          <div className="flex size-7 items-center justify-center rounded-lg bg-slate-900 text-white">
+          <div className="bg-foreground text-background flex size-7 items-center justify-center rounded-lg">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
                 d="M2 10.5L5.5 4 9 8l2-3 1 1.5"
-                stroke="white"
+                stroke="currentColor"
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
           </div>
-          <span className="text-sm font-semibold tracking-[0.14em] text-slate-900 transition-opacity duration-200 group-hover:opacity-70">
+          <span className="text-foreground group-hover:text-muted-foreground text-sm font-semibold tracking-[0.14em] transition-colors duration-200">
             SPEND4U
           </span>
         </Link>
@@ -62,7 +63,7 @@ export function LandingNavbar() {
             <a
               key={link.label}
               href={link.href}
-              className="rounded-lg px-3.5 py-1.5 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-slate-100 hover:text-slate-900"
+              className="text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg px-3.5 py-1.5 text-sm font-medium transition-all duration-200"
             >
               {link.label}
             </a>
@@ -70,6 +71,8 @@ export function LandingNavbar() {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle />
+
           <Show when="signed-out">
             <SignInButton mode="modal">
               <Button variant="ghost" size="sm">
@@ -82,9 +85,9 @@ export function LandingNavbar() {
           </Show>
 
           <Show when="signed-in">
-            <ButtonLink href="/dashboard" size="sm">
-              Open app
-            </ButtonLink>
+            <Button asChild size="lg">
+              <Link href="/dashboard">Open app</Link>
+            </Button>
           </Show>
         </div>
 
@@ -93,7 +96,7 @@ export function LandingNavbar() {
           aria-expanded={mobileOpen}
           aria-label="Toggle navigation menu"
           onClick={() => setMobileOpen((prev) => !prev)}
-          className="inline-flex size-10 items-center justify-center rounded-xl border border-slate-300 bg-white/90 text-slate-800 transition-all duration-200 hover:bg-slate-100 active:scale-[0.97] md:hidden"
+          className="border-border bg-card text-card-foreground hover:bg-muted inline-flex size-10 items-center justify-center rounded-xl border transition-all duration-200 active:scale-[0.97] md:hidden"
         >
           <svg
             width="18"
@@ -126,7 +129,7 @@ export function LandingNavbar() {
           }`}
         >
           <div
-            className={`overflow-hidden rounded-2xl border border-slate-300 bg-slate-50/95 p-3 shadow-[0_12px_28px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-all duration-200 ${
+            className={`border-border bg-card/95 overflow-hidden rounded-2xl border p-3 shadow-lg backdrop-blur-xl transition-all duration-200 ${
               mobileOpen
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-2 opacity-0"
@@ -138,39 +141,41 @@ export function LandingNavbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors duration-200 hover:bg-slate-200/70 hover:text-slate-900"
+                  className="text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-200"
                 >
                   {link.label}
                 </a>
               ))}
             </div>
 
-            <div className="mt-3 grid gap-2 border-t border-slate-200 pt-3">
+            <div className="mt-3 grid gap-2 border-t border-border pt-3">
+              <ThemeToggle className="w-full" />
+
               <Show when="signed-out">
                 <SignInButton mode="modal">
                   <button
                     type="button"
-                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 transition-colors duration-200 hover:bg-slate-50"
+                    className="border-border text-foreground hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm font-medium transition-colors duration-200 focus-visible:ring-2"
                   >
                     Sign in
                   </button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <Button className="w-full" size="sm">
+                  <Button className="w-full" size="lg">
                     Get Started
                   </Button>
                 </SignUpButton>
               </Show>
 
               <Show when="signed-in">
-                <ButtonLink
-                  href="/dashboard"
+                <Button
+                  asChild
                   size="sm"
                   className="w-full"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Open app
-                </ButtonLink>
+                  <Link href="/dashboard">Open app</Link>
+                </Button>
               </Show>
             </div>
           </div>

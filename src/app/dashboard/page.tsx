@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { DashboardSidebar } from "@/components/dashboard/sidebar";
 import { StatCard } from "@/components/dashboard/stat-card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // --- 1. DATA DUMMY ---
 const stats = [
@@ -26,35 +26,74 @@ const chartBars = [
 ];
 
 // --- 2. KOMPONEN LOADING (SKELETON UI) ---
-// Ini akan tampil selama data user sedang di-fetch dari Clerk
 function DashboardSkeleton() {
   return (
-    <section className="space-y-6 animate-pulse">
+    <section className="space-y-6">
       {/* Skeleton Header */}
-      <div className="h-24 w-full rounded-2xl bg-[#f0f3f9]" />
+      <div className="flex items-center justify-between rounded-2xl border border-[#e6e9f1] bg-white p-4 shadow-[0_8px_22px_rgba(16,20,34,0.06)] sm:p-6">
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-8 w-64 sm:w-80" />
+        </div>
+        <Skeleton className="size-8 rounded-full" />
+      </div>
 
       {/* Skeleton Stats */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <div className="h-32 rounded-2xl bg-[#f0f3f9]" />
-        <div className="h-32 rounded-2xl bg-[#f0f3f9]" />
-        <div className="h-32 rounded-2xl bg-[#f0f3f9]" />
+        {[1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="rounded-2xl border border-[#e6e9f1] bg-white p-6 shadow-sm"
+          >
+            <Skeleton className="h-5 w-28 mb-4" />
+            <Skeleton className="h-8 w-32 mb-2" />
+            <Skeleton className="h-4 w-40" />
+          </div>
+        ))}
       </div>
 
       {/* Skeleton Chart & Activity */}
       <div className="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
-        <div className="h-80 rounded-2xl bg-[#f0f3f9]" />
-        <div className="h-80 rounded-2xl bg-[#f0f3f9]" />
+        <div className="rounded-2xl border border-[#e6e9f1] bg-white p-6 shadow-sm">
+          <Skeleton className="h-6 w-40 mb-6" />
+          <div className="space-y-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="flex items-center gap-4">
+                <Skeleton className="size-10 rounded-full" />
+                <div className="space-y-2 flex-1">
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-3 w-1/2" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <section className="rounded-2xl border border-[#e6e9f1] bg-white p-6 shadow-[0_8px_24px_rgba(16,22,38,0.06)]">
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-6 w-36" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+
+          <div className="mt-6 h-64 rounded-xl border border-dashed border-[#d9dfee] bg-[#fdfdff] p-4 flex items-end gap-2">
+            {[20, 40, 30, 60, 50, 80, 70, 90].map((h, i) => (
+              <Skeleton
+                key={i}
+                className="flex-1 rounded-t-md rounded-b-none"
+                style={{ height: `${h}%` }}
+              />
+            ))}
+          </div>
+        </section>
       </div>
     </section>
   );
 }
 
 // --- 3. KOMPONEN KONTEN UTAMA (ASYNC FETCH) ---
-// Komponen ini bertugas mengambil data user yang memakan waktu
 async function DashboardContent() {
   const user = await currentUser();
 
-  // Logika penentuan nama yang aman
   const name =
     user?.firstName || user?.emailAddresses?.[0]?.emailAddress || "User";
 
@@ -112,21 +151,12 @@ async function DashboardContent() {
 }
 
 // --- 4. HALAMAN UTAMA (ENTRY POINT) ---
-export default async function DashboardPage() {
-  // Cek autentikasi dasar secepat mungkin
-  const { userId } = await auth();
-
-  if (!userId) {
-    redirect("/");
-  }
-
+export default function DashboardPage() {
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
-        {/* Sidebar akan langsung dirender tanpa menunggu */}
         <DashboardSidebar active="overview" />
 
-        {/* Suspense akan menampilkan DashboardSkeleton sambil menunggu DashboardContent selesai diproses */}
         <Suspense fallback={<DashboardSkeleton />}>
           <DashboardContent />
         </Suspense>

@@ -7,20 +7,20 @@ const metrics = [
 
 export function MetricsSection() {
   return (
-    <section className="mx-auto mt-24 w-full max-w-5xl rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-[0_14px_34px_rgba(15,23,42,0.08)] sm:p-10">
-      <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+    <section className="border-border bg-card mx-auto mt-24 w-full max-w-5xl rounded-3xl border p-6 text-center shadow-md sm:p-10">
+      <h3 className="text-foreground text-2xl font-semibold tracking-tight sm:text-3xl">
         Built for teams that treat operations as a competitive advantage
       </h3>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {metrics.map((metric) => (
           <div
             key={metric.label}
-            className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-5"
+            className="border-border bg-muted rounded-2xl border px-3 py-5"
           >
-            <p className="text-3xl font-semibold tracking-tight text-slate-900">
+            <p className="text-foreground text-3xl font-semibold tracking-tight">
               {metric.value}
             </p>
-            <p className="mt-1 text-sm text-slate-600">{metric.label}</p>
+            <p className="text-muted-foreground mt-1 text-sm">{metric.label}</p>
           </div>
         ))}
       </div>

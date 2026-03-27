@@ -1,3 +1,4 @@
+// src/app/page.tsx
 import { FeaturesGridSection } from "@/components/landing/features-grid";
 import { FinalCtaSection } from "@/components/landing/final-cta";
 import { LandingFooter } from "@/components/landing/footer";
@@ -13,7 +14,7 @@ export default function Home() {
   return (
     <>
       <LandingNavbar />
-      <main className="relative min-h-screen overflow-x-hidden bg-slate-50 px-4 pb-6 sm:px-6 lg:px-8">
+      <main className="bg-background relative min-h-screen overflow-x-hidden px-4 pb-6 sm:px-6 lg:px-8">
         <LandingHero />
         <SocialProofSection />
         <FeaturesGridSection />

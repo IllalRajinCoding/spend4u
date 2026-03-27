@@ -25,10 +25,10 @@ export function TestimonialsSection() {
   return (
     <section className="mx-auto mt-24 w-full max-w-7xl">
       <div className="mx-auto max-w-3xl text-center">
-        <h3 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+        <h3 className="text-foreground text-3xl font-semibold tracking-tight sm:text-4xl">
           Loved by operators who move fast
         </h3>
-        <p className="mt-4 text-base leading-7 text-slate-600">
+        <p className="text-muted-foreground mt-4 text-base leading-7">
           Teams across product, finance, and strategy use Spend4U to execute
           with confidence.
         </p>
@@ -39,7 +39,7 @@ export function TestimonialsSection() {
           <Card key={testimonial.name}>
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-full bg-slate-200 text-sm font-semibold text-slate-700">
+                <div className="bg-muted text-muted-foreground flex size-10 items-center justify-center rounded-full text-sm font-semibold">
                   {testimonial.name
                     .split(" ")
                     .map((part) => part[0])
@@ -47,13 +47,15 @@ export function TestimonialsSection() {
                     .slice(0, 2)}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">
+                  <p className="text-foreground text-sm font-semibold">
                     {testimonial.name}
                   </p>
-                  <p className="text-xs text-slate-500">{testimonial.role}</p>
+                  <p className="text-muted-foreground text-xs">
+                    {testimonial.role}
+                  </p>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-6 text-slate-600">
+              <p className="text-muted-foreground mt-4 text-sm leading-6">
                 &ldquo;{testimonial.quote}&rdquo;
               </p>
             </CardContent>
